@@ -7,3 +7,10 @@ services:
       - 1234:80
     volumes:
       - .:/var/dev/craft/
+    working_dir: /var/dev/craft/
+    command: >
+      bash -c "
+      composer install && 
+      npm install && 
+      echo 'PHP is listening on ::1234' && 
+      php -S 0.0.0.0:80 -t /var/dev/craft/web/"
