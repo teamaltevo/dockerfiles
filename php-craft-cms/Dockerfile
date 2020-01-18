@@ -8,12 +8,14 @@ RUN ln -fs /usr/share/zoneinfo/America/Toronto /etc/localtime
 RUN apt-get install php7.2 -y
 RUN apt-get install php-pear php7.2-curl php7.2-dev php7.2-gd php7.2-mbstring php7.2-zip php7.2-mysql php7.2-xml wget unzip curl -y
 
+COPY ./templates/php.ini /etc/php/7.2/cli/php.ini
+
 # Install composer
 RUN curl -sS https://getcomposer.org/installer |php
 RUN mv composer.phar /usr/local/bin/composer
 
 # Install node and NPM
 RUN curl -sL https://deb.nodesource.com/setup_12.x | bash -
-RUN apt install nodejs -y
+RUN apt-get install -y nodejs
 
 CMD ["php", "-S", "0.0.0.0:80", "-t", "/var/dev/craft/web/"]
