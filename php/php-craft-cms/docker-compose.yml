@@ -1,0 +1,16 @@
+version: '3'
+services:
+  app:
+    image: writools/php-craft-cms:1.0.2 # Pulled from Docker Hub
+    container_name: craft_app_1
+    ports:
+      - 1234:80
+    volumes:
+      - .:/var/dev/craft/
+    working_dir: /var/dev/craft/
+    command: >
+      bash -c "
+      composer install && 
+      npm install && 
+      echo 'PHP is listening on ::1234' && 
+      php -S 0.0.0.0:80 -t /var/dev/craft/web/"
