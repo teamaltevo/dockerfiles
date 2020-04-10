@@ -1,6 +1,8 @@
 # writools/php:7.3-apache-craft-runtime
 FROM php:7.0-apache as runtime
 # ADD ./templates/php.ini /usr/local/etc/php/conf.d/app.ini
+COPY ./templates/vhost-config.conf /etc/apache2/sites-available/000-default.conf
+RUN a2enmod rewrite 
 
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
@@ -9,7 +11,6 @@ RUN apt-get update && \
 # Install PDO_MySql
 RUN docker-php-ext-install pdo_mysql 
 RUN docker-php-ext-install mysqli
-
 
 # Install zip extension
 RUN apt-get install -y --no-install-recommends libzip-dev
