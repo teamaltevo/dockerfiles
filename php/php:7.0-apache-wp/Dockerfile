@@ -16,5 +16,13 @@ RUN docker-php-ext-install mysqli
 RUN apt-get install -y --no-install-recommends libzip-dev
 RUN docker-php-ext-install zip
 
+# Install WP-CLI
+RUN apt-get update && apt-get install less
+WORKDIR /opt
+RUN curl -O https://raw.githubusercontent.com/wp-cli/builds/gh-pages/phar/wp-cli.phar
+RUN chmod +x wp-cli.phar
+RUN mv wp-cli.phar /usr/local/bin/wp
+
 # Cleaning apt temp files
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+WORKDIR /var/www/html
